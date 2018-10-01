@@ -7,4 +7,4 @@ A site like Flickr uses reactjs.
 - Automatically upload 20 more images when scrolling to the bottom of the page.
 
 ## Demo
-
+https://phanthaoit.github.io/Flickr/
