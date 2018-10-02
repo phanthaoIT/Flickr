@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
 
 const api_key = 'aaae15617266491a38519f52be4443c2'
 
@@ -12,7 +14,7 @@ class App extends Component {
         page:1,
         max:1,
     }
-}
+  }
   componentDidMount() {
     axios.get(`https://api.flickr.com/services/rest/?method=flickr.interestingness.getList&api_key=${api_key}&extras=+owner_name%2Cviews%2Curl_z&per_page=20&page=1&format=json&nojsoncallback=1`)    
     .then(res=>{
@@ -39,17 +41,18 @@ class App extends Component {
     return (
       <div>
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">Flickr</a>
+          <a class="navbar-brand">Flickr</a>
         </div>
-      <InfiniteScroll
+      <InfiniteScroll style={{marginLeft:50,marginRight:50}}
           dataLength={this.state.images.length}
           next={this.loadData}
           hasMore={true}>
-           <div id="mygallery">
-            {this.state.images.map(image => (
+          <GridList cellHeight={300} cols={3}>
+           {this.state.images.map(image => (
+            <GridListTile key={image.id}>
               <div className="box">
                 <div className="imgBox"> 
-                  <img alt={image.title} src={image.url_z} style={{height:250}}/>
+                  <img alt={image.title} src={image.url_z}/>
                 </div>
                 <div className="content">
                   <p>{image.title}</p><br></br>
@@ -57,9 +60,11 @@ class App extends Component {
                   <p>views: {image.views}</p>
                 </div>
               </div>
+            </GridListTile> 
             ))}
-          </div>
-      </InfiniteScroll></div>
+          </GridList>
+      </InfiniteScroll>
+    </div>
     );
   }
 }
